@@ -11,9 +11,9 @@ module.exports = {
         red: colors.red,
         yellow: colors.amber,
         blue: colors.blue,
-        purple: colors.violet,
+        purple: colors.purple,
         pink: colors.pink,
-        orange: colors.violet
+        orange: colors.orange
       },
       boxShadow: {
         default: "0 4px 8px 0 rgba(0,0,0,.2)"

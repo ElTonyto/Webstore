@@ -22,7 +22,7 @@ const App: React.FC = () => {
             />
             <HeadTitle />
             <Header />
-            <div className={`${location.pathname !== "/not-found" ? "container sm:w-7/12 px-3 sm:px-0 container-padding" : ""}`}>
+            <div className={`${location.pathname !== "/not-found" ? "container sm:w-11/12 px-3 sm:px-0 container-padding" : ""}`}>
                 <Routes />
             </div>
         </>
