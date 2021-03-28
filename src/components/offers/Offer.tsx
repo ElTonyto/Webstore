@@ -9,6 +9,7 @@ type PropsType = {
 const Offer: React.FC<PropsType> = ({ offer }) => {
     const history = useHistory()
     const [product, setProduct] = useState<any>(null)
+    const priceArr = offer.price.split(".")
 
     useEffect(() => {
         oneProducts(offer.product.id)
@@ -43,7 +44,7 @@ const Offer: React.FC<PropsType> = ({ offer }) => {
                 </div>
                 <div className="mr-7 w-2/12 flex flex-col justify-between items-center">
                     <div className="flex flex-col items-center mb-2">
-                        <p className="font-medium text-orange-500 text-3xl">{offer.price}€</p>
+                        <span className="flex text-orange-500 font-medium"><p className="text-3xl">{priceArr[0]}</p><sup className="text-lg mt-2">€{priceArr[1]}</sup></span>
                         <p className="font-medium text-black text-md pb-2">Au lieu de <span className="line-through">{product.price}€</span></p>
                     </div>
                     <button className="bg-blue-500 text-white text-lg w-full py-1 rounded">Ajouter au panier</button>

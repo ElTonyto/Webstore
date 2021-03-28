@@ -46,6 +46,7 @@ const OfferById: React.FC<PropsType> = ({ match }) => {
     }
 
     if (offer !== null) {
+        const priceArr = offer.price.split(".")
         return (
             <>
                 <HeadTitle title={offer.product.name} />
@@ -56,7 +57,10 @@ const OfferById: React.FC<PropsType> = ({ match }) => {
                     <div className="w-2/4 flex flex-col">
                         <div className="flex justify-between items-center">
                             <h2 className="font-medium text-2xl">{offer.product.name}</h2>
-                            <p className="font-medium text-orange-500 text-4xl pb-2">{offer.price}€</p>
+                            <div className="flex">
+                                <span className="flex text-orange-500 font-medium"><p className="text-4xl pb-2">{priceArr[0]}</p><sup className="text-lg mt-2">€{priceArr[1]}</sup></span>
+                                <p className="font-medium text-black text-md line-through mt-3">{offer.price}€</p>
+                            </div>
                         </div>
                         <p className={`${offer.product.remainingStock > 0 ? "text-green-500" : "text-red-500"} font-medium text-lg mt-2`}>{offer.product.remainingStock > 0 ? "En stock !" : "Pas de stock"}</p>
                         <p className="text-gray-700 mt-2">{offer.product.description}</p>
