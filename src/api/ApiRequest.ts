@@ -5,8 +5,8 @@ export const allCatalogs = () => axios.get("catalogs")
 export const oneCatalog = (id: string) => axios.get(`catalogs/${id}`)
 
 // Offers
-export const allOffers = () => axios.get("offers")
-export const oneOffer = (id: string) => axios.get(`offers/${id}`)
+export const allOffers = () => axios.get("offers?isActive=true")
+export const oneOffer = (id: string) => axios.get(`offers/${id}?isActive=true`)
 
 // Products
 export const allProducts = () => axios.get("products")
