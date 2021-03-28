@@ -1,0 +1,15 @@
+.progress-bar-success {
+    background: #4EAFA4!important;
+}
+
+.progress-bar-info {
+    background: rgb(107, 107, 244)!important;
+}
+
+.progress-bar-warning {
+    background: rgb(255, 199, 59)!important;
+}
+
+.progress-bar-error {
+    background:  rgb(232, 33, 33)!important;
+}
