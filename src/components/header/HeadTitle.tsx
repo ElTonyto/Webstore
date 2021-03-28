@@ -2,39 +2,48 @@ import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { useLocation } from 'react-router-dom'
 
-const HeadTitle: React.FC = () => {
+type PropsType = {
+    title?: string
+}
+
+const HeadTitle: React.FC<PropsType> = ({ title }) => {
     const location = useLocation()
-    const [title, setTitle] = useState<string>("ABC")
+    const [titleRender, setTitle] = useState<string>("ABC")
 
     useEffect(() => {
-        switch(location.pathname) {
-            case "/cart":
-                setTitle("Panier - ABC")
-                break;
-            case "/offers":
-                setTitle("Offres - ABC")
-                break;
-            case "/products":
-                setTitle("Produits - ABC")
-                break;
-            case "/not-found":
-                setTitle("Page introuvable - ABC")
-                break;
-            case "/order-summary":
-                setTitle("Résumé de la commande - ABC")
-                break;
-            case "/":
-                setTitle("ABC")
-                break;
-            default:
-                break;
+        if (title === null || title === undefined) {
+            switch(location.pathname) {
+                case "/cart":
+                    setTitle("Panier - ABC")
+                    break;
+                case "/offers":
+                    setTitle("Offres - ABC")
+                    break;
+                case "/products":
+                    setTitle("Produits - ABC")
+                    break;
+                case "/not-found":
+                    setTitle("Page introuvable - ABC")
+                    break;
+                case "/order-summary":
+                    setTitle("Résumé de la commande - ABC")
+                    break;
+                case "/":
+                    setTitle("ABC")
+                    break;
+                default:
+                    setTitle("ABC")
+                    break;
+            }
+        } else {
+            setTitle(`${title} - ABC`)
         }
     }, [location])
     
     return (
         <>
             <Helmet>
-                <title>{title}</title>
+                <title>{titleRender}</title>
             </Helmet>
         </>
     )
