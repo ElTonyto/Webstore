@@ -10,11 +10,13 @@ import NotFound from "../components/errors/NotFound"
 
 import Home from "../components/home/Home"
 import ProductById from "../components/products/ProductById"
+import OfferById from '../components/offers/OfferById'
 
 
 const Routes: React.FC = () => (
     <Switch>
         <Route exact path="/products/:id" component={ProductById} />
+        <Route exact path="/offers/:id" component={OfferById} />
 
         <Route exact path="/order-summary" component={OrderSummary} />
         <Route exact path="/cart" component={Cart} />

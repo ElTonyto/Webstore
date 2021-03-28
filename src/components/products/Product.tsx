@@ -36,9 +36,9 @@ const Product: React.FC<PropsType> = ({ product }) => {
             <div className="mr-7 w-2/12 flex flex-col justify-between items-center">
                 <div className="flex flex-col items-center mb-2">
                     <p className="text-xl">A partir de</p>
-                    <p className="font-medium text-orange-500 text-3xl pb-2">{product.price} €</p>
+                    <p className="font-medium text-orange-500 text-3xl pb-2">{product.price}€</p>
                 </div>
-                <button className="bg-blue-500 text-white text-lg w-full rounded">Voir</button>
+                <button className="bg-blue-500 text-white text-lg w-full py-1 rounded">Voir</button>
             </div>
         </div>
     )
