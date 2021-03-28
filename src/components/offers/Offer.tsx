@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router"
 import { oneProducts } from "../../api/ApiRequest"
+import { getTimeRemaining } from "../../utils/Utils"
 
 type PropsType = {
     offer: any
@@ -9,12 +10,19 @@ type PropsType = {
 const Offer: React.FC<PropsType> = ({ offer }) => {
     const history = useHistory()
     const [product, setProduct] = useState<any>(null)
+    const [offerLimit, setOfferLimit] = useState<string>("")
     const priceArr = offer.price.split(".")
 
     useEffect(() => {
         oneProducts(offer.product.id)
         .then(res => setProduct(res.data.data))
     }, [])
+
+    useEffect(() => {
+        const t = getTimeRemaining(offer.endAt)
+        const time = setInterval(() => setOfferLimit(`${t.days}j ${t.hours}h ${t.minutes}min ${t.seconds}s`), 1000)
+        return () => clearInterval(time)
+    }, [offerLimit])
 
     const options = () => {
         if (product.options !== null) {
@@ -41,6 +49,7 @@ const Offer: React.FC<PropsType> = ({ offer }) => {
                     <h3 className="font-medium text-xl">{product.name}</h3>
                     <p className="text-gray-700">{product.description}</p>
                     {options()}
+                    <p className="text-orange-500">{`Il vous reste ${offerLimit} pour commander !`}</p>
                 </div>
                 <div className="mr-7 w-2/12 flex flex-col justify-between items-center">
                     <div className="flex flex-col items-center mb-2">

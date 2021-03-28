@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Redirect } from "react-router"
 import { oneOffer } from '../../api/ApiRequest'
 import HeadTitle from "../header/HeadTitle"
+import { getTimeRemaining } from '../../utils/Utils'
 
 type PropsType = {
     match: any
@@ -10,6 +11,7 @@ type PropsType = {
 const OfferById: React.FC<PropsType> = ({ match }) => {
     const [id] = useState<string>(match.params.id)
     const [offer, setOffer] = useState<any>(null)
+    const [offerLimit, setOfferLimit] = useState<string>("")
     const [redirect, setRedirect] = useState<boolean>(false)
 
     useEffect(() => {
@@ -25,6 +27,14 @@ const OfferById: React.FC<PropsType> = ({ match }) => {
             })
         }
     }, [id])
+
+    useEffect(() => {
+        if (offer !== null) {
+            const t = getTimeRemaining(offer.endAt)
+            const time = setInterval(() => setOfferLimit(`${t.days}j ${t.hours}h ${t.minutes}min ${t.seconds}s`), 1000)
+            return () => clearInterval(time)
+        }
+    }, [offerLimit, offer])
 
     const renderOption = () => {
         return offer.product.options.map((item: any, index: number) => {
@@ -64,6 +74,7 @@ const OfferById: React.FC<PropsType> = ({ match }) => {
                         </div>
                         <p className={`${offer.product.remainingStock > 0 ? "text-green-500" : "text-red-500"} font-medium text-lg mt-2`}>{offer.product.remainingStock > 0 ? "En stock !" : "Pas de stock"}</p>
                         <p className="text-gray-700 mt-2">{offer.product.description}</p>
+                        <p className="text-orange-500 mt-2">{`Il vous reste ${offerLimit} pour commander !`}</p>
                         <div>
                             {renderOption()}
                         </div>
