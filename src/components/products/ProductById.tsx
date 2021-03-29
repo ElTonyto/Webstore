@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { Redirect } from "react-router"
-import { oneProducts, allChildProductsByParentId } from '../../api/ApiRequest';
+import { Redirect, useHistory } from "react-router"
+import { oneProducts, allChildProductsByParentId, insertCart } from '../../api/ApiRequest';
 import HeadTitle from "../header/HeadTitle"
 
 type PropsType = {
@@ -8,12 +8,14 @@ type PropsType = {
 }
 
 const ProductById: React.FC<PropsType> = ({ match }) => {
+    const history = useHistory()
     const [id] = useState<string>(match.params.id)
     const [parent, setParent] = useState<any>(null)
     const [products, setProducts] = useState<Array<any>>([])
     const [selectedProducts, setSelectedProducts] = useState<any>(null)
     const [optionsProducts, setOptionsProducts] = useState<Array<any>>([])
     const [selectOptions, setSelectOptions] = useState<Array<any>>([])
+    const [quantity, setQuantity] = useState<string>("1")
     const [redirect, setRedirect] = useState<boolean>(false)
 
     useEffect(() => {
@@ -95,6 +97,23 @@ const ProductById: React.FC<PropsType> = ({ match }) => {
         })
     }
 
+    const renderQuantity = () => {
+        const selectQuantity: string[] = []
+        for (let i = 1; i < 100; i++) {
+            selectQuantity.push(`${i}`)
+        }
+        return selectQuantity.map((item: any) => {
+            return <option value={item}>{item}</option>
+        })
+    }
+
+    const addCart = () => {
+        if (selectedProducts !== null) {
+            insertCart({ type: "product", typeId: selectedProducts.id, quantity: quantity })
+            .then(() => history.push("/cart"))
+        }
+    }
+
     if (redirect) {
         return (
             <Redirect to={{ pathname: "/not-found" }} />
@@ -119,8 +138,14 @@ const ProductById: React.FC<PropsType> = ({ match }) => {
                         <p className="text-gray-700 mt-2">{selectedProducts.description}</p>
                         <div>
                             {renderOption()}
+                            <div className="mt-2">
+                                <p>Quantité</p>
+                                <select defaultValue={quantity} onChange={(e) => setQuantity(e.target.value)} className="w-full bg-white my-0.5 px-2 py-3 text-lg border border-gray-300 rounded-md font-medium outline-none cursor-pointer">
+                                    {renderQuantity()}
+                                </select>
+                            </div>
                         </div>
-                        <button className={`${selectedProducts.remainingStock > 0 ? "bg-blue-500 text-white cursor-pointer" : "bg-gray-500 cursor-not-allowed"} text-white text-lg py-3 text-lg w-full font-medium rounded mt-7`}>Ajouter au panier</button>
+                        <button onClick={() => addCart()} className={`${selectedProducts.remainingStock > 0 ? "bg-blue-500 text-white cursor-pointer" : "bg-gray-500 cursor-not-allowed"} text-white text-lg py-3 text-lg w-full font-medium rounded mt-7`}>Ajouter au panier</button>
                     </div>
                 </div>
             </>

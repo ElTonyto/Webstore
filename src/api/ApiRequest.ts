@@ -14,3 +14,8 @@ export const allParentProducts = () => axios.get("products?isParent=true")
 export const allChildProducts = () => axios.get("products?isParent=false")
 export const oneProducts = (id: string) => axios.get(`products/${id}?allChild=false`)
 export const allChildProductsByParentId = (id: string) => axios.get(`products/${id}?allChild=true`)
+
+// Cart
+export const oneCart = () => axios.get("cart")
+export const insertCart = (data: { type: string, typeId: string, quantity: string}) => axios.post("cart", { data })
+export const deleteCart = () => axios.delete("cart")

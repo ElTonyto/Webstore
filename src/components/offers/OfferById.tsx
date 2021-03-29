@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { Redirect } from "react-router"
-import { oneOffer } from '../../api/ApiRequest'
+import { Redirect, useHistory } from "react-router"
+import { insertCart, oneOffer } from '../../api/ApiRequest'
 import HeadTitle from "../header/HeadTitle"
 import { getTimeRemaining } from '../../utils/Utils'
 
@@ -9,9 +9,11 @@ type PropsType = {
 }
 
 const OfferById: React.FC<PropsType> = ({ match }) => {
+    const history = useHistory()
     const [id] = useState<string>(match.params.id)
     const [offer, setOffer] = useState<any>(null)
     const [offerLimit, setOfferLimit] = useState<string>("")
+    const [quantity, setQuantity] = useState<string>("1")
     const [redirect, setRedirect] = useState<boolean>(false)
 
     useEffect(() => {
@@ -36,6 +38,13 @@ const OfferById: React.FC<PropsType> = ({ match }) => {
         }
     }, [offerLimit, offer])
 
+    const addCart = () => {
+        if (offer !== null) {
+            insertCart({ type: "offer", typeId: offer.id, quantity: quantity })
+            .then(() => history.push("/cart"))
+        }
+    }
+
     const renderOption = () => {
         return offer.product.options.map((item: any, index: number) => {
             return (
@@ -46,6 +55,16 @@ const OfferById: React.FC<PropsType> = ({ match }) => {
                     </select>
                 </div>
             )
+        })
+    }
+
+    const renderQuantity = () => {
+        const selectQuantity: string[] = []
+        for (let i = 1; i < 100; i++) {
+            selectQuantity.push(`${i}`)
+        }
+        return selectQuantity.map((item: any) => {
+            return <option value={item}>{item}</option>
         })
     }
 
@@ -77,8 +96,14 @@ const OfferById: React.FC<PropsType> = ({ match }) => {
                         <p className="text-orange-500 mt-2">{`Il vous reste ${offerLimit} pour commander !`}</p>
                         <div>
                             {renderOption()}
+                            <div className="mt-2">
+                                <p>Quantité</p>
+                                <select defaultValue={quantity} onChange={(e) => setQuantity(e.target.value)} className="w-full bg-white my-0.5 px-2 py-3 text-lg border border-gray-300 rounded-md font-medium outline-none cursor-pointer">
+                                    {renderQuantity()}
+                                </select>
+                            </div>
                         </div>
-                        <button className="bg-blue-500 text-white text-lg py-3 text-lg w-full font-medium rounded mt-7">Ajouter au panier</button>
+                        <button onClick={() => addCart()} className="bg-blue-500 text-white text-lg py-3 text-lg w-full font-medium rounded mt-7">Ajouter au panier</button>
                     </div>
                 </div>
             </>

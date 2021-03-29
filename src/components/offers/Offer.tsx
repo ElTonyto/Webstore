@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router"
-import { oneProducts } from "../../api/ApiRequest"
+import { insertCart, oneProducts } from "../../api/ApiRequest"
 import { getTimeRemaining } from "../../utils/Utils"
 
 type PropsType = {
@@ -23,6 +23,11 @@ const Offer: React.FC<PropsType> = ({ offer }) => {
         const time = setInterval(() => setOfferLimit(`${t.days}j ${t.hours}h ${t.minutes}min ${t.seconds}s`), 1000)
         return () => clearInterval(time)
     }, [offerLimit, offer])
+
+    const addCart = () => {
+        insertCart({ type: "offer", typeId: offer.id, quantity: "1" })
+        .then(() => history.push("/cart"))
+    }
 
     const options = () => {
         if (product.options !== null) {
@@ -56,7 +61,7 @@ const Offer: React.FC<PropsType> = ({ offer }) => {
                         <span className="flex text-orange-500 font-medium"><p className="text-3xl">{priceArr[0]}</p><sup className="text-lg mt-2">€{priceArr[1]}</sup></span>
                         <p className="font-medium text-black text-md pb-2">Au lieu de <span className="line-through">{product.price}€</span></p>
                     </div>
-                    <button className="bg-blue-500 text-white text-lg w-full py-1 rounded">Ajouter au panier</button>
+                    <button onClick={() => addCart()} className="bg-blue-500 text-white text-lg w-full py-1 rounded">Ajouter au panier</button>
                 </div>
             </div>
         )
