@@ -32,6 +32,10 @@ const Cart: React.FC = () => {
         })()
     }, [cart])
 
+    const sendCartToPayment = () => {
+        history.push("/order-summary")
+    }
+
     if (cart.length === 0) {
         return (
             <div className="mt-20 flex items-center">
@@ -68,7 +72,7 @@ const Cart: React.FC = () => {
                             <h3 className="text-xl font-medium">Récapitulatif</h3>
                             <div className="px-10 py-3 border flex flex-col justify center">
                                 <p className="flex justify-between">Total: <span className="flex text-orange-500 font-medium"><p className="text-4xl pb-2">{priceArr[0]}</p><sup className="text-lg mt-2">€{priceArr[1]}</sup></span></p>
-                                <button className="bg-blue-500 text-white text-md w-full py-2 mt-3 rounded">Passer au paiement</button>
+                                <button onClick={() => sendCartToPayment()} className="bg-blue-500 text-white text-md w-full py-2 mt-3 rounded">Passer au paiement</button>
                             </div>
                         </div>
                     )}
