@@ -82,7 +82,7 @@ const CartItem: React.FC<PropsType> = ({ cart }) => {
                     <div className="flex flex-col items-center mb-2">
                         <div className="flex flex-col text-center">
                             <span className="flex text-orange-500 font-medium justify-center"><p className="text-4xl pb-2">{priceArr[0]}</p><sup className="text-lg mt-2">€{priceArr[1]}</sup></span>
-                            {type === "offer" && <p className="font-medium text-black text-md pb-2">Au lieu de <span className="line-through">{Number(cartItem.product.price) * quantity}€</span></p>}
+                            {type === "offer" && <p className="font-medium text-black text-md pb-2">Au lieu de <span className="line-through">{(Number(cartItem.product.price) * quantity).toFixed(2)}€</span></p>}
                         </div>
                         {renderQuantity()}
                         <button onClick={() => removeCart()} className="bg-red-500 text-white text-md px-2 py-1 mt-2 rounded">retirer</button>
