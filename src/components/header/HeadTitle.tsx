@@ -38,7 +38,7 @@ const HeadTitle: React.FC<PropsType> = ({ title }) => {
         } else {
             setTitle(`${title} - ABC`)
         }
-    }, [location])
+    }, [location, title])
     
     return (
         <>

@@ -16,13 +16,13 @@ const Offer: React.FC<PropsType> = ({ offer }) => {
     useEffect(() => {
         oneProducts(offer.product.id)
         .then(res => setProduct(res.data.data))
-    }, [])
+    }, [offer])
 
     useEffect(() => {
         const t = getTimeRemaining(offer.endAt)
         const time = setInterval(() => setOfferLimit(`${t.days}j ${t.hours}h ${t.minutes}min ${t.seconds}s`), 1000)
         return () => clearInterval(time)
-    }, [offerLimit])
+    }, [offerLimit, offer])
 
     const options = () => {
         if (product.options !== null) {

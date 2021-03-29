@@ -42,7 +42,7 @@ const ProductById: React.FC<PropsType> = ({ match }) => {
                 setRedirect(true)
             })
         }
-    }, [id])
+    }, [id, optionsProducts])
 
     useEffect(() => {
         for (let i = 0; i < optionsProducts.length; i++) {
@@ -53,11 +53,11 @@ const ProductById: React.FC<PropsType> = ({ match }) => {
                 }
             }
             if (checkSame) {
-                const changeProduct = products.filter((item) => item.id == optionsProducts[i].id)
+                const changeProduct = products.filter((item) => item.id === optionsProducts[i].id)
                 setSelectedProducts(changeProduct[0])
             }
         }
-    }, [selectOptions])
+    }, [selectOptions, optionsProducts, products])
 
     const handlerSelectChange = (e: any, optionName: string) => {
         const value = e.target.value.trim()
