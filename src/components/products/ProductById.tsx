@@ -120,7 +120,7 @@ const ProductById: React.FC<PropsType> = ({ match }) => {
                         <div>
                             {renderOption()}
                         </div>
-                        <button className="bg-blue-500 text-white text-lg py-3 text-lg w-full font-medium rounded mt-7">Ajouter au panier</button>
+                        <button className={`${selectedProducts.remainingStock > 0 ? "bg-blue-500 text-white cursor-pointer" : "bg-gray-500 cursor-not-allowed"} text-white text-lg py-3 text-lg w-full font-medium rounded mt-7`}>Ajouter au panier</button>
                     </div>
                 </div>
             </>
