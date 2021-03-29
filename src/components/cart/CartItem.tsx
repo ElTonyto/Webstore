@@ -66,7 +66,7 @@ const CartItem: React.FC<PropsType> = ({ cart }) => {
 
     if (cartItem !== null) {
         const product = (type === "offer") ? cartItem.product : cartItem
-        const priceArr = (type === "offer") ? `${Number(cartItem.price) * quantity}`.split(".") : `${Number(product.price) * quantity}`.split(".")
+        const priceArr = (type === "offer") ? `${(Number(cartItem.price) * quantity).toFixed(2)}`.split(".") : `${(Number(product.price) * quantity).toFixed(2)}`.split(".")
 
         return (
             <div className="flex justify-between  space-x-3 mt-2 mb-4 border-b py-4">
