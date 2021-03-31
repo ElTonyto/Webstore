@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  dotnet:
+    build: .
+    image: webstore-abc
+    restart: always
+    ports:
+      - "8082:80"
